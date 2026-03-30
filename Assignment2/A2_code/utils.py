@@ -1,6 +1,19 @@
 # Adapted from https://github.com/Andras7/word2vec-pytorch/blob/master/word2vec/data_reader.py
 
+import re
+
 import numpy as np
+
+
+EN_TOKEN_RE = re.compile(r"[A-Za-z]+(?:'[A-Za-z]+)?")
+
+
+def tokenize_line(line: str, lang: str):
+    if lang == "zh":
+        return list(line.strip())
+    if lang == "en":
+        return EN_TOKEN_RE.findall(line.lower())
+    raise ValueError(f"Unsupported language: {lang}")
 
 class CorpusReader:
     NEGATIVE_TABLE_SIZE = 1e8
@@ -25,10 +38,7 @@ class CorpusReader:
     def read_words(self, min_count):
         word_frequency = dict()
         for line in open(self.inputFileName, encoding="utf8"):
-            if self.lang == "zh":
-                words = list(line.strip())
-            elif self.lang == "en":
-                words = line.split()
+            words = tokenize_line(line, self.lang)
             if len(words) > 0:
                 for word in words:
                     self.token_count += 1

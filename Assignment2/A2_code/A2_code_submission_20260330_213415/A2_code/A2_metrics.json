@@ -1,0 +1,1181 @@
+{
+  "teacher_standard": {
+    "analogy_topn": 5,
+    "passing_accuracy_hint": 0.01
+  },
+  "raw_corpus_stats": {
+    "line_count": 40000,
+    "nonempty_line_count": 32777,
+    "raw_token_count": 203839,
+    "raw_vocab_size": 12373
+  },
+  "runs": {
+    "set1": {
+      "name": "set1",
+      "config": {
+        "name": "set1",
+        "emb_size": 100,
+        "window_size": 3,
+        "negative_samples": 5,
+        "min_count": 2,
+        "embedding_mode": "input",
+        "seed": 42,
+        "epochs": 3,
+        "batch_size": 128,
+        "learning_rate": 0.025,
+        "negative_table_size": 1000000,
+        "analogy_topn": 5,
+        "device": "cpu"
+      },
+      "corpus_stats": {
+        "filtered_token_count": 198320,
+        "filtered_vocab_size": 6854,
+        "usable_lines": 27281,
+        "training_pairs": 833158
+      },
+      "loss_history": [
+        3.074113380855196,
+        2.7591317579244596,
+        2.58567527850112
+      ],
+      "embedding_file": "D:\\OneDrive\\Study\\2026 Spring\\Natural Language Processing\\Assignment2\\A2_code\\embeddings_set1.txt",
+      "analogy_summary": {
+        "topn": 5,
+        "total_rows": 2594,
+        "valid_rows": 1508,
+        "skipped_rows": 1086,
+        "correct_rows": 24,
+        "overall_accuracy": 0.015915119363395226,
+        "per_subject": {
+          "capital-common-countries": {
+            "correct": 0,
+            "valid": 6,
+            "skipped": 0,
+            "examples": [
+              {
+                "prompt": "london:england::paris:?",
+                "predictions": [
+                  "fear'd",
+                  "deposed",
+                  "decrees",
+                  "gonzalo",
+                  "deliberate"
+                ],
+                "target": "france",
+                "correct": false
+              },
+              {
+                "prompt": "london:england::rome:?",
+                "predictions": [
+                  "fear'd",
+                  "nature",
+                  "nobles",
+                  "winged",
+                  "that"
+                ],
+                "target": "italy",
+                "correct": false
+              },
+              {
+                "prompt": "paris:france::rome:?",
+                "predictions": [
+                  "rider",
+                  "deep",
+                  "warwick",
+                  "contrary",
+                  "forest"
+                ],
+                "target": "italy",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.0
+          },
+          "capital-world": {
+            "correct": 0,
+            "valid": 3,
+            "skipped": 2,
+            "examples": [
+              {
+                "prompt": "london:england::paris:?",
+                "predictions": [
+                  "fear'd",
+                  "deposed",
+                  "decrees",
+                  "gonzalo",
+                  "deliberate"
+                ],
+                "target": "france",
+                "correct": false
+              },
+              {
+                "prompt": "london:england::rome:?",
+                "predictions": [
+                  "fear'd",
+                  "nature",
+                  "nobles",
+                  "winged",
+                  "that"
+                ],
+                "target": "italy",
+                "correct": false
+              },
+              {
+                "prompt": "paris:france::rome:?",
+                "predictions": [
+                  "rider",
+                  "deep",
+                  "warwick",
+                  "contrary",
+                  "forest"
+                ],
+                "target": "italy",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.0
+          },
+          "family": {
+            "correct": 18,
+            "valid": 182,
+            "skipped": 58,
+            "examples": [
+              {
+                "prompt": "boy:girl::brother:?",
+                "predictions": [
+                  "officers",
+                  "dreams",
+                  "hinder",
+                  "neighbour",
+                  "citizens"
+                ],
+                "target": "sister",
+                "correct": false
+              },
+              {
+                "prompt": "boy:girl::father:?",
+                "predictions": [
+                  "neighbour",
+                  "leaden",
+                  "should",
+                  "mother's",
+                  "is't"
+                ],
+                "target": "mother",
+                "correct": false
+              },
+              {
+                "prompt": "boy:girl::groom:?",
+                "predictions": [
+                  "knaves",
+                  "mother's",
+                  "least",
+                  "nails",
+                  "multitude"
+                ],
+                "target": "bride",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.0989010989010989
+          },
+          "gram1-adjective-to-adverb": {
+            "correct": 0,
+            "valid": 72,
+            "skipped": 60,
+            "examples": [
+              {
+                "prompt": "cheerful:cheerfully::free:?",
+                "predictions": [
+                  "temperately",
+                  "deliver",
+                  "vouches",
+                  "read",
+                  "sour"
+                ],
+                "target": "freely",
+                "correct": false
+              },
+              {
+                "prompt": "cheerful:cheerfully::happy:?",
+                "predictions": [
+                  "into",
+                  "rid",
+                  "carefully",
+                  "hope",
+                  "storm"
+                ],
+                "target": "happily",
+                "correct": false
+              },
+              {
+                "prompt": "cheerful:cheerfully::immediate:?",
+                "predictions": [
+                  "stole",
+                  "falsely",
+                  "unborn",
+                  "muffle",
+                  "vouches"
+                ],
+                "target": "immediately",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.0
+          },
+          "gram2-opposite": {
+            "correct": 0,
+            "valid": 42,
+            "skipped": 14,
+            "examples": [
+              {
+                "prompt": "certain:uncertain::fortunate:?",
+                "predictions": [
+                  "negligent",
+                  "unrest",
+                  "frank'd",
+                  "patron",
+                  "enjoying"
+                ],
+                "target": "unfortunate",
+                "correct": false
+              },
+              {
+                "prompt": "certain:uncertain::honest:?",
+                "predictions": [
+                  "oppression",
+                  "picture",
+                  "believed",
+                  "repeat",
+                  "tutors"
+                ],
+                "target": "dishonest",
+                "correct": false
+              },
+              {
+                "prompt": "certain:uncertain::known:?",
+                "predictions": [
+                  "ordering",
+                  "repeat",
+                  "patron",
+                  "stretch'd",
+                  "negligent"
+                ],
+                "target": "unknown",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.0
+          },
+          "gram3-comparative": {
+            "correct": 0,
+            "valid": 380,
+            "skipped": 376,
+            "examples": [
+              {
+                "prompt": "bad:worse::big:?",
+                "predictions": [
+                  "encounters",
+                  "lies",
+                  "perchance",
+                  "minded",
+                  "bohemia's"
+                ],
+                "target": "bigger",
+                "correct": false
+              },
+              {
+                "prompt": "bad:worse::cold:?",
+                "predictions": [
+                  "helms",
+                  "frowns",
+                  "december",
+                  "peter",
+                  "lad"
+                ],
+                "target": "colder",
+                "correct": false
+              },
+              {
+                "prompt": "bad:worse::deep:?",
+                "predictions": [
+                  "frowns",
+                  "itself",
+                  "cried",
+                  "france",
+                  "parts"
+                ],
+                "target": "deeper",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.0
+          },
+          "gram4-superlative": {
+            "correct": 0,
+            "valid": 72,
+            "skipped": 270,
+            "examples": [
+              {
+                "prompt": "bad:worst::good:?",
+                "predictions": [
+                  "vi",
+                  "o",
+                  "enrolled",
+                  "sovereign",
+                  "o'erpast"
+                ],
+                "target": "best",
+                "correct": false
+              },
+              {
+                "prompt": "bad:worst::great:?",
+                "predictions": [
+                  "eating",
+                  "harvest",
+                  "incur",
+                  "norfolk",
+                  "trencher"
+                ],
+                "target": "greatest",
+                "correct": false
+              },
+              {
+                "prompt": "bad:worst::high:?",
+                "predictions": [
+                  "kissing",
+                  "lap",
+                  "eating",
+                  "roar",
+                  "manacles"
+                ],
+                "target": "highest",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.0
+          },
+          "gram5-present-participle": {
+            "correct": 0,
+            "valid": 156,
+            "skipped": 54,
+            "examples": [
+              {
+                "prompt": "dance:dancing::fly:?",
+                "predictions": [
+                  "blaze",
+                  "upholds",
+                  "declining",
+                  "answers",
+                  "firmament"
+                ],
+                "target": "flying",
+                "correct": false
+              },
+              {
+                "prompt": "dance:dancing::go:?",
+                "predictions": [
+                  "bequeath",
+                  "grants",
+                  "owed",
+                  "hoarse",
+                  "twos"
+                ],
+                "target": "going",
+                "correct": false
+              },
+              {
+                "prompt": "dance:dancing::look:?",
+                "predictions": [
+                  "bent",
+                  "firmament",
+                  "beneath",
+                  "grants",
+                  "smells"
+                ],
+                "target": "looking",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.0
+          },
+          "gram6-nationality-adjective": {
+            "correct": 0,
+            "valid": 19,
+            "skipped": 10,
+            "examples": [
+              {
+                "prompt": "england:english::france:?",
+                "predictions": [
+                  "save",
+                  "rights",
+                  "smiles",
+                  "your",
+                  "hair"
+                ],
+                "target": "french",
+                "correct": false
+              },
+              {
+                "prompt": "england:english::greece:?",
+                "predictions": [
+                  "hair",
+                  "daughter's",
+                  "got",
+                  "windows",
+                  "frown"
+                ],
+                "target": "greek",
+                "correct": false
+              },
+              {
+                "prompt": "england:english::ireland:?",
+                "predictions": [
+                  "hair",
+                  "disdain'd",
+                  "much",
+                  "stands",
+                  "shearing"
+                ],
+                "target": "irish",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.0
+          },
+          "gram7-past-tense": {
+            "correct": 0,
+            "valid": 210,
+            "skipped": 96,
+            "examples": [
+              {
+                "prompt": "dancing:danced::falling:?",
+                "predictions": [
+                  "cheques",
+                  "pond",
+                  "forest",
+                  "period",
+                  "entail"
+                ],
+                "target": "fell",
+                "correct": false
+              },
+              {
+                "prompt": "dancing:danced::feeding:?",
+                "predictions": [
+                  "pond",
+                  "praying",
+                  "constrains",
+                  "getting",
+                  "troop"
+                ],
+                "target": "fed",
+                "correct": false
+              },
+              {
+                "prompt": "dancing:danced::going:?",
+                "predictions": [
+                  "grass",
+                  "holla",
+                  "flag",
+                  "hic",
+                  "strikes"
+                ],
+                "target": "went",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.0
+          },
+          "gram8-plural": {
+            "correct": 3,
+            "valid": 210,
+            "skipped": 62,
+            "examples": [
+              {
+                "prompt": "bird:birds::cat:?",
+                "predictions": [
+                  "sunshine",
+                  "unseen",
+                  "adding",
+                  "lends",
+                  "begetting"
+                ],
+                "target": "cats",
+                "correct": false
+              },
+              {
+                "prompt": "bird:birds::child:?",
+                "predictions": [
+                  "adding",
+                  "dishonourable",
+                  "peace",
+                  "cloud",
+                  "caparison"
+                ],
+                "target": "children",
+                "correct": false
+              },
+              {
+                "prompt": "bird:birds::cloud:?",
+                "predictions": [
+                  "canopy",
+                  "fasting",
+                  "thorns",
+                  "hollow",
+                  "shaft"
+                ],
+                "target": "clouds",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.014285714285714285
+          },
+          "gram9-plural-verbs": {
+            "correct": 3,
+            "valid": 156,
+            "skipped": 84,
+            "examples": [
+              {
+                "prompt": "eat:eats::find:?",
+                "predictions": [
+                  "declining",
+                  "hurry",
+                  "dump",
+                  "antic",
+                  "pointed"
+                ],
+                "target": "finds",
+                "correct": false
+              },
+              {
+                "prompt": "eat:eats::go:?",
+                "predictions": [
+                  "getting",
+                  "hop",
+                  "foolery",
+                  "wenches",
+                  "merciless"
+                ],
+                "target": "goes",
+                "correct": false
+              },
+              {
+                "prompt": "eat:eats::play:?",
+                "predictions": [
+                  "dump",
+                  "getting",
+                  "passado",
+                  "foolery",
+                  "barne"
+                ],
+                "target": "plays",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.019230769230769232
+          }
+        }
+      }
+    },
+    "set2": {
+      "name": "set2",
+      "config": {
+        "name": "set2",
+        "emb_size": 150,
+        "window_size": 5,
+        "negative_samples": 15,
+        "min_count": 2,
+        "embedding_mode": "combined",
+        "seed": 42,
+        "epochs": 3,
+        "batch_size": 128,
+        "learning_rate": 0.025,
+        "negative_table_size": 1000000,
+        "analogy_topn": 5,
+        "device": "cpu"
+      },
+      "corpus_stats": {
+        "filtered_token_count": 198320,
+        "filtered_vocab_size": 6854,
+        "usable_lines": 27281,
+        "training_pairs": 1143074
+      },
+      "loss_history": [
+        4.822805784200892,
+        4.349890810919004,
+        4.199694565980964
+      ],
+      "embedding_file": "D:\\OneDrive\\Study\\2026 Spring\\Natural Language Processing\\Assignment2\\A2_code\\embeddings_set2.txt",
+      "analogy_summary": {
+        "topn": 5,
+        "total_rows": 2594,
+        "valid_rows": 1508,
+        "skipped_rows": 1086,
+        "correct_rows": 11,
+        "overall_accuracy": 0.007294429708222812,
+        "per_subject": {
+          "capital-common-countries": {
+            "correct": 0,
+            "valid": 6,
+            "skipped": 0,
+            "examples": [
+              {
+                "prompt": "london:england::paris:?",
+                "predictions": [
+                  "angle",
+                  "disobedient",
+                  "bolingbroke's",
+                  "better",
+                  "ill"
+                ],
+                "target": "france",
+                "correct": false
+              },
+              {
+                "prompt": "london:england::rome:?",
+                "predictions": [
+                  "banishment",
+                  "tribunes",
+                  "ill",
+                  "dooms",
+                  "malady"
+                ],
+                "target": "italy",
+                "correct": false
+              },
+              {
+                "prompt": "paris:france::rome:?",
+                "predictions": [
+                  "banishment",
+                  "return",
+                  "embraced",
+                  "chairs",
+                  "went"
+                ],
+                "target": "italy",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.0
+          },
+          "capital-world": {
+            "correct": 0,
+            "valid": 3,
+            "skipped": 2,
+            "examples": [
+              {
+                "prompt": "london:england::paris:?",
+                "predictions": [
+                  "angle",
+                  "disobedient",
+                  "bolingbroke's",
+                  "better",
+                  "ill"
+                ],
+                "target": "france",
+                "correct": false
+              },
+              {
+                "prompt": "london:england::rome:?",
+                "predictions": [
+                  "banishment",
+                  "tribunes",
+                  "ill",
+                  "dooms",
+                  "malady"
+                ],
+                "target": "italy",
+                "correct": false
+              },
+              {
+                "prompt": "paris:france::rome:?",
+                "predictions": [
+                  "banishment",
+                  "return",
+                  "embraced",
+                  "chairs",
+                  "went"
+                ],
+                "target": "italy",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.0
+          },
+          "family": {
+            "correct": 6,
+            "valid": 182,
+            "skipped": 58,
+            "examples": [
+              {
+                "prompt": "boy:girl::brother:?",
+                "predictions": [
+                  "sons",
+                  "deceitful",
+                  "life's",
+                  "father",
+                  "slaughter"
+                ],
+                "target": "sister",
+                "correct": false
+              },
+              {
+                "prompt": "boy:girl::father:?",
+                "predictions": [
+                  "show'd",
+                  "sons",
+                  "flatter",
+                  "granted",
+                  "warwick"
+                ],
+                "target": "mother",
+                "correct": false
+              },
+              {
+                "prompt": "boy:girl::groom:?",
+                "predictions": [
+                  "death's",
+                  "froward",
+                  "felt",
+                  "mates",
+                  "fond"
+                ],
+                "target": "bride",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.03296703296703297
+          },
+          "gram1-adjective-to-adverb": {
+            "correct": 1,
+            "valid": 72,
+            "skipped": 60,
+            "examples": [
+              {
+                "prompt": "cheerful:cheerfully::free:?",
+                "predictions": [
+                  "nourish",
+                  "youngest",
+                  "players",
+                  "statutes",
+                  "lock"
+                ],
+                "target": "freely",
+                "correct": false
+              },
+              {
+                "prompt": "cheerful:cheerfully::happy:?",
+                "predictions": [
+                  "knighthood",
+                  "freed",
+                  "bastardy",
+                  "wrench",
+                  "likewise"
+                ],
+                "target": "happily",
+                "correct": false
+              },
+              {
+                "prompt": "cheerful:cheerfully::immediate:?",
+                "predictions": [
+                  "enfranchisement",
+                  "birthright",
+                  "aptly",
+                  "confederate",
+                  "dick"
+                ],
+                "target": "immediately",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.013888888888888888
+          },
+          "gram2-opposite": {
+            "correct": 0,
+            "valid": 42,
+            "skipped": 14,
+            "examples": [
+              {
+                "prompt": "certain:uncertain::fortunate:?",
+                "predictions": [
+                  "flock",
+                  "scene",
+                  "disgrace",
+                  "injurious",
+                  "dissemble"
+                ],
+                "target": "unfortunate",
+                "correct": false
+              },
+              {
+                "prompt": "certain:uncertain::honest:?",
+                "predictions": [
+                  "malmsey",
+                  "close",
+                  "end",
+                  "basely",
+                  "accident"
+                ],
+                "target": "dishonest",
+                "correct": false
+              },
+              {
+                "prompt": "certain:uncertain::known:?",
+                "predictions": [
+                  "gonzalo",
+                  "creeping",
+                  "disgrace",
+                  "witted",
+                  "accident"
+                ],
+                "target": "unknown",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.0
+          },
+          "gram3-comparative": {
+            "correct": 1,
+            "valid": 380,
+            "skipped": 376,
+            "examples": [
+              {
+                "prompt": "bad:worse::big:?",
+                "predictions": [
+                  "lime",
+                  "kill",
+                  "greater",
+                  "wildly",
+                  "rub"
+                ],
+                "target": "bigger",
+                "correct": false
+              },
+              {
+                "prompt": "bad:worse::cold:?",
+                "predictions": [
+                  "sheriff",
+                  "francisca",
+                  "alonso",
+                  "aedile",
+                  "sampson"
+                ],
+                "target": "colder",
+                "correct": false
+              },
+              {
+                "prompt": "bad:worse::deep:?",
+                "predictions": [
+                  "brach",
+                  "sheriff",
+                  "francisca",
+                  "bracelet",
+                  "paulina"
+                ],
+                "target": "deeper",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.002631578947368421
+          },
+          "gram4-superlative": {
+            "correct": 0,
+            "valid": 72,
+            "skipped": 270,
+            "examples": [
+              {
+                "prompt": "bad:worst::good:?",
+                "predictions": [
+                  "revenues",
+                  "sheriff",
+                  "aedile",
+                  "presence",
+                  "find"
+                ],
+                "target": "best",
+                "correct": false
+              },
+              {
+                "prompt": "bad:worst::great:?",
+                "predictions": [
+                  "coriolanus",
+                  "sheriff",
+                  "capitol",
+                  "duchess",
+                  "cominius"
+                ],
+                "target": "greatest",
+                "correct": false
+              },
+              {
+                "prompt": "bad:worst::high:?",
+                "predictions": [
+                  "presence",
+                  "fantastic",
+                  "consumed",
+                  "aumerle",
+                  "throne"
+                ],
+                "target": "highest",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.0
+          },
+          "gram5-present-participle": {
+            "correct": 0,
+            "valid": 156,
+            "skipped": 54,
+            "examples": [
+              {
+                "prompt": "dance:dancing::fly:?",
+                "predictions": [
+                  "ride",
+                  "ordain'd",
+                  "palm",
+                  "guards",
+                  "brands"
+                ],
+                "target": "flying",
+                "correct": false
+              },
+              {
+                "prompt": "dance:dancing::go:?",
+                "predictions": [
+                  "bid",
+                  "knights",
+                  "panting",
+                  "assemble",
+                  "let"
+                ],
+                "target": "going",
+                "correct": false
+              },
+              {
+                "prompt": "dance:dancing::look:?",
+                "predictions": [
+                  "unbuckle",
+                  "sheriff",
+                  "kernels",
+                  "panting",
+                  "dorcas"
+                ],
+                "target": "looking",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.0
+          },
+          "gram6-nationality-adjective": {
+            "correct": 0,
+            "valid": 19,
+            "skipped": 10,
+            "examples": [
+              {
+                "prompt": "england:english::france:?",
+                "predictions": [
+                  "iron",
+                  "smiles",
+                  "himself",
+                  "field",
+                  "tiger"
+                ],
+                "target": "french",
+                "correct": false
+              },
+              {
+                "prompt": "england:english::greece:?",
+                "predictions": [
+                  "knot",
+                  "exceed",
+                  "covert",
+                  "smiles",
+                  "fates"
+                ],
+                "target": "greek",
+                "correct": false
+              },
+              {
+                "prompt": "england:english::ireland:?",
+                "predictions": [
+                  "alarums",
+                  "smiles",
+                  "on't",
+                  "mischiefs",
+                  "whipt"
+                ],
+                "target": "irish",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.0
+          },
+          "gram7-past-tense": {
+            "correct": 1,
+            "valid": 210,
+            "skipped": 96,
+            "examples": [
+              {
+                "prompt": "dancing:danced::falling:?",
+                "predictions": [
+                  "consumed",
+                  "begs",
+                  "wreck'd",
+                  "ravenspurgh",
+                  "commanded"
+                ],
+                "target": "fell",
+                "correct": false
+              },
+              {
+                "prompt": "dancing:danced::feeding:?",
+                "predictions": [
+                  "costly",
+                  "consumed",
+                  "petruchio",
+                  "ornament",
+                  "article"
+                ],
+                "target": "fed",
+                "correct": false
+              },
+              {
+                "prompt": "dancing:danced::going:?",
+                "predictions": [
+                  "vassal",
+                  "magistrate",
+                  "murder",
+                  "ambling",
+                  "tables"
+                ],
+                "target": "went",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.004761904761904762
+          },
+          "gram8-plural": {
+            "correct": 2,
+            "valid": 210,
+            "skipped": 62,
+            "examples": [
+              {
+                "prompt": "bird:birds::cat:?",
+                "predictions": [
+                  "tumble",
+                  "knack",
+                  "dauphin",
+                  "thirsty",
+                  "examine"
+                ],
+                "target": "cats",
+                "correct": false
+              },
+              {
+                "prompt": "bird:birds::child:?",
+                "predictions": [
+                  "heavily",
+                  "pluck'd",
+                  "dirt",
+                  "moon",
+                  "gravity"
+                ],
+                "target": "children",
+                "correct": false
+              },
+              {
+                "prompt": "bird:birds::cloud:?",
+                "predictions": [
+                  "shot",
+                  "battles",
+                  "whisper",
+                  "follow'd",
+                  "widow's"
+                ],
+                "target": "clouds",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.009523809523809525
+          },
+          "gram9-plural-verbs": {
+            "correct": 0,
+            "valid": 156,
+            "skipped": 84,
+            "examples": [
+              {
+                "prompt": "eat:eats::find:?",
+                "predictions": [
+                  "thimble",
+                  "writ",
+                  "dealings",
+                  "hover",
+                  "medicine"
+                ],
+                "target": "finds",
+                "correct": false
+              },
+              {
+                "prompt": "eat:eats::go:?",
+                "predictions": [
+                  "divers",
+                  "northumberland",
+                  "weep'st",
+                  "height",
+                  "remorse"
+                ],
+                "target": "goes",
+                "correct": false
+              },
+              {
+                "prompt": "eat:eats::play:?",
+                "predictions": [
+                  "mouse",
+                  "cradle",
+                  "cold",
+                  "part",
+                  "punishment"
+                ],
+                "target": "plays",
+                "correct": false
+              }
+            ],
+            "accuracy": 0.0
+          }
+        }
+      }
+    }
+  },
+  "best_run_name": "set1",
+  "selected_words": [
+    "sister",
+    "brother",
+    "woman",
+    "man",
+    "girl",
+    "boy",
+    "queen",
+    "king"
+  ],
+  "svd_summary": {
+    "selected_words": [
+      "sister",
+      "brother",
+      "woman",
+      "man",
+      "girl",
+      "boy",
+      "queen",
+      "king"
+    ],
+    "explained_variance_ratio": 0.49263617396354675
+  },
+  "artifact_paths": {
+    "loss_plot": "D:\\OneDrive\\Study\\2026 Spring\\Natural Language Processing\\Assignment2\\A2_code\\A2_training_loss.png",
+    "svd_plot": "D:\\OneDrive\\Study\\2026 Spring\\Natural Language Processing\\Assignment2\\A2_code\\A2_embedding_svd.png",
+    "best_embedding_file": "D:\\OneDrive\\Study\\2026 Spring\\Natural Language Processing\\Assignment2\\A2_code\\embeddings.txt",
+    "completed_notebook": "D:\\OneDrive\\Study\\2026 Spring\\Natural Language Processing\\Assignment2\\A2_code\\A2_w2v_completed.ipynb",
+    "metrics_file": "D:\\OneDrive\\Study\\2026 Spring\\Natural Language Processing\\Assignment2\\A2_code\\A2_metrics.json"
+  }
+}

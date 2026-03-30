@@ -1,0 +1,111 @@
+\documentclass[11pt,a4paper]{ctexart}
+
+\usepackage[a4paper,margin=0.82in]{geometry}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+
+\setstretch{1.05}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.35em}
+\setlength{\abovedisplayskip}{7pt}
+\setlength{\belowdisplayskip}{7pt}
+\setlength{\abovedisplayshortskip}{5pt}
+\setlength{\belowdisplayshortskip}{5pt}
+\pagestyle{fancy}
+\fancyhf{}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\title{\vspace{-1.2cm}\textbf{CS310 自然语言处理}\\[3pt]\large Assignment 2 书面题答案\vspace{-0.4cm}}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{1. 证明交叉熵损失满足 $J(y,\hat{y})=-\log \hat{y}_o$}
+
+由于真实标签 $y$ 是关于正确 outside word $o$ 的 one-hot 向量，因此
+\[
+y_o = 1,\qquad y_w = 0 \quad (w \ne o).
+\]
+
+交叉熵定义为
+\begin{align*}
+J(y,\hat{y})
+&= -\sum_{w} y_w \log \hat{y}_w \\
+&= -\left(y_o \log \hat{y}_o + \sum_{w \ne o} y_w \log \hat{y}_w \right) \\
+&= -\left(1 \cdot \log \hat{y}_o + \sum_{w \ne o} 0 \cdot \log \hat{y}_w \right) \\
+&= -\log \hat{y}_o.
+\end{align*}
+
+因此，当目标分布是 one-hot 向量时，交叉熵只保留模型分配给正确 outside word 的对数概率。
+
+\section*{2. 计算 $\frac{\partial J}{\partial v_c}$}
+
+记
+\[
+z = U^\top v_c,\qquad \hat{y} = \operatorname{softmax}(z),\qquad
+J(y,\hat{y}) = -\sum_w y_w \log \hat{y}_w.
+\]
+
+对于 softmax 加交叉熵这一组合，关于打分向量 $z$ 的梯度为
+\[
+\frac{\partial J}{\partial z} = \hat{y} - y.
+\]
+
+又因为
+\[
+z = U^\top v_c,
+\]
+根据链式法则可得
+\begin{align*}
+\frac{\partial J}{\partial v_c}
+&= \frac{\partial z}{\partial v_c}\frac{\partial J}{\partial z} \\
+&= U(\hat{y} - y).
+\end{align*}
+
+所以最终答案为
+\[
+\boxed{\frac{\partial J}{\partial v_c} = U(\hat{y} - y)}.
+\]
+
+若写成展开形式，也可以表示为
+\[
+\frac{\partial J}{\partial v_c} = \sum_w (\hat{y}_w - y_w)\,u_w.
+\]
+
+\section*{3. 计算每个 outside word 向量 $u_w$ 的梯度}
+
+对任意 outside word 向量 $u_w$，其对应的分数为
+\[
+z_w = u_w^\top v_c.
+\]
+
+由链式法则，
+\begin{align*}
+\frac{\partial J}{\partial u_w}
+&= \frac{\partial J}{\partial z_w}\frac{\partial z_w}{\partial u_w} \\
+&= (\hat{y}_w - y_w)v_c.
+\end{align*}
+
+因此分两种情况：
+
+\textbf{当 $w=o$ 时：}
+\[
+\frac{\partial J}{\partial u_o} = (\hat{y}_o - 1)v_c.
+\]
+
+\textbf{当 $w\ne o$ 时：}
+\[
+\frac{\partial J}{\partial u_w} = \hat{y}_w v_c.
+\]
+
+统一写法为
+\[
+\boxed{\frac{\partial J}{\partial u_w} = (\hat{y}_w - y_w)v_c}.
+\]
+
+\end{document}
