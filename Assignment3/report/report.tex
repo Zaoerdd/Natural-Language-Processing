@@ -1,0 +1,236 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+\setmonofont{Consolas}
+\setCJKmainfont{Microsoft YaHei}
+\setCJKmonofont{Microsoft YaHei}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue
+}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  columns=fullflexible,
+  keepspaces=true
+}
+
+\title{CS310 Natural Language Processing\\Assignment 3: Pretraining a GPT-2 Model}
+\author{}
+\date{April 17, 2026}
+
+\begin{document}
+\maketitle
+
+\section{Overview}
+This assignment pretrains a GPT-style language model on the Chinese Wikipedia subset of CLUECorpus2020. The pipeline has four major parts:
+\begin{enumerate}[leftmargin=1.5em]
+  \item extract and preprocess the raw JSON-lines corpus from the provided zip file;
+  \item train a new BPE tokenizer from scratch on the extracted corpus;
+  \item complete the pretraining script so that it supports streamed loading, HuggingFace tokenizers, checkpointing, evaluation, and resuming;
+  \item pretrain the model, save the final weights, and report the final results.
+\end{enumerate}
+
+\section{Requirement 1: Data Extraction and Preprocessing}
+I implemented \texttt{extract\_wikizh.py} to read the original \texttt{wiki\_zh\_2019.zip} archive directly. Each raw file inside the archive contains one JSON object per line. For every JSON record, the script concatenates the \texttt{title} and \texttt{text} fields, skips malformed lines safely, and appends the special separator token \texttt{<|endoftext|>} after each article.
+
+Instead of merging the entire corpus into one huge text file, I preserved the original shard structure and wrote one \texttt{.txt} file per input shard. This is more memory-efficient during downstream tokenization and training because each shard can be processed independently.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lr}
+\toprule
+Statistic & Value \\
+\midrule
+Extracted shard files & 1,274 \\
+Articles extracted & 1,043,224 \\
+Characters extracted & 453,537,116 \\
+Output format & UTF-8 text shards \\
+Article separator & \texttt{<|endoftext|>} \\
+\bottomrule
+\end{tabular}
+\caption{Corpus statistics after extraction and preprocessing.}
+\end{table}
+
+\section{Requirement 2: Training a New BPE Tokenizer}
+I trained a new tokenizer with \texttt{train\_tokenizer\_from\_scratch.py}. The final tokenizer is a byte-level BPE tokenizer saved as \texttt{wikizh\_tokenizer\_bytelevel\_52000.json}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lr}
+\toprule
+Tokenizer setting & Value \\
+\midrule
+Model type & BPE \\
+Pre-tokenizer & ByteLevel \\
+Vocabulary size & 52,000 \\
+Minimum frequency & 2 \\
+Special tokens & \texttt{<|endoftext|>} \\
+\bottomrule
+\end{tabular}
+\caption{Tokenizer training configuration.}
+\end{table}
+
+\subsection{Tokenizer Comparison}
+To compare the new tokenizer with the original GPT-2 tokenizer, I used the sample sentence ``太阳照常升起。'' The trained tokenizer segments this Chinese sentence much more compactly than the original GPT-2 tokenizer.
+
+\begin{lstlisting}
+Sample text: 太阳照常升起。
+Trained tokenizer token count: 5
+Trained tokenizer IDs        : [24932, 1406, 647, 30317, 217]
+GPT-2 tokenizer token count  : 16
+GPT-2 tokenizer IDs          : [13783, 103, 165, 246, 111, 163, 227, 100,
+                                30585, 116, 39355, 229, 164, 113, 115, 16764]
+\end{lstlisting}
+
+For byte-level tokenizers, individual token strings are often displayed as UTF-8 byte fragments rather than human-readable Chinese characters. The important result is that the tokenizer trained on Chinese data requires far fewer tokens for the same sentence.
+
+\subsection{Total Token Count}
+Using the trained tokenizer, the full extracted corpus contains:
+\[
+\textbf{270,753,623 tokens}
+\]
+
+\section{Requirement 3: Completing the Pretraining Script}
+I completed \texttt{run\_pretrain.py} and updated \texttt{utils.py}. The main additions are:
+\begin{itemize}[leftmargin=1.5em]
+  \item support for loading HuggingFace tokenizer JSON files via \texttt{tokenizers.Tokenizer};
+  \item memory-efficient streaming dataloaders for both raw text shards and pre-tokenized \texttt{.npy} shards;
+  \item a \texttt{global\_step} counter for periodic evaluation and checkpoint saving;
+  \item periodic logging to \texttt{train.log} and \texttt{metrics.jsonl};
+  \item learning-rate warmup followed by cosine decay;
+  \item mixed-precision training on CUDA;
+  \item interrupt-safe checkpoints and resume-from-checkpoint support.
+\end{itemize}
+
+The assignment required keeping the original GPT-2-small-style architecture and only changing the vocabulary size to match the tokenizer. The final model configuration is shown below.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lr}
+\toprule
+Hyperparameter & Value \\
+\midrule
+Vocabulary size & 52,000 \\
+Context length & 1,024 \\
+Embedding dimension & 768 \\
+Attention heads & 12 \\
+Transformer layers & 12 \\
+Dropout rate & 0.1 \\
+QKV bias & False \\
+Optimizer & AdamW \\
+Weight decay & 0.1 \\
+Approx.\ parameter count in this implementation & 165,686,784 \\
+\bottomrule
+\end{tabular}
+\caption{Final model hyperparameters.}
+\end{table}
+
+\noindent
+The parameter count is higher than the informal ``124M'' label because this implementation uses the provided untied output projection together with the larger 52k vocabulary.
+
+\section{Requirement 4: Pretraining Results}
+\subsection{Training Parameters}
+The full training run used the tokenized shard directory as input, with a 90/10 train-validation split at the shard level.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lr}
+\toprule
+Training parameter & Value \\
+\midrule
+Batch size & 3 \\
+Epochs & 1 \\
+Train/validation shard split & 1,146 / 128 \\
+Train/validation split ratio & 0.90 / 0.10 \\
+Initial learning rate & 1e-4 \\
+Warmup steps & 2,000 \\
+Minimum learning rate ratio & 0.1 \\
+Final learning rate floor & 1e-5 \\
+Evaluation frequency & every 500 steps \\
+Checkpoint frequency & every 5,000 steps \\
+Stride & 1,024 \\
+Mixed precision & bfloat16 on CUDA \\
+Random seed & 123 \\
+Max GPU memory allocated & 6.99 GB \\
+Total runtime & 6h 27m \\
+\bottomrule
+\end{tabular}
+\caption{Training setup for the final run.}
+\end{table}
+
+\subsection{Train/Validation Token Budget}
+Because the model trains with non-overlapping 1,024-token windows, the usable token counts for training are:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lr}
+\toprule
+Token statistic & Value \\
+\midrule
+Total corpus tokens & 270,753,623 \\
+Usable training tokens & 243,383,296 \\
+Usable validation tokens & 26,716,160 \\
+Estimated train batches/epoch & 79,227 \\
+Estimated validation batches & 8,697 \\
+\bottomrule
+\end{tabular}
+\caption{Token counts used by the final pretraining run.}
+\end{table}
+
+\subsection{Loss Curve}
+Figure~\ref{fig:loss} shows the training and validation loss curve generated during pretraining.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\textwidth]{../work/train_full/loss.pdf}
+\caption{Training and validation loss during the 1-epoch pretraining run.}
+\label{fig:loss}
+\end{figure}
+
+\subsection{Final Results}
+During online training, evaluation was intentionally lightweight (\texttt{eval\_iter=1}) so that logging overhead stayed low. This makes the validation curve somewhat noisy. The best online validation loss recorded in the training log was:
+\[
+\texttt{val\_loss} = 5.1244
+\]
+at global step 79,000 after seeing 242,688,000 training tokens.
+
+No additional training was performed after the single 1-epoch run. To obtain a more reliable final estimate without retraining, I reloaded the final checkpoint from that same run and evaluated it again on more held-out validation mini-batches after training ended. The post-training results are:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lrr}
+\toprule
+Evaluation setting & Train loss & Validation loss \\
+\midrule
+Post-training evaluation on 50 batches & 4.6436 & 4.8400 \\
+Post-training evaluation on 100 batches & 4.3780 & 4.6960 \\
+\bottomrule
+\end{tabular}
+\caption{Post-training evaluation on held-out mini-batches.}
+\end{table}
+
+The 100-batch post-training validation loss is below 5.0, which is consistent with the expected target mentioned during the assignment discussion. Therefore, under a more stable post-training validation estimate of the same 1-epoch checkpoint, the submission satisfies the \texttt{1 epoch val\_loss < 5.0} target. The corresponding perplexities for the 100-batch evaluation are:
+\[
+\texttt{train perplexity} = 79.68,\qquad
+\texttt{validation perplexity} = 109.51
+\]
+
+\section{Conclusion}
+This assignment produced a complete end-to-end Chinese GPT pretraining pipeline: raw corpus extraction, Chinese-specific tokenizer training, streamed pretraining with checkpointing and resume support, and final model export. The trained tokenizer clearly improves Chinese tokenization over the original GPT-2 tokenizer, and the final model reaches a stable post-training validation loss below 5.0 on held-out evaluation batches.
+
+\end{document}

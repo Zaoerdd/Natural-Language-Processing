@@ -1,3 +1,66 @@
+# Python environments
 .venv/
+venv/
+env/
+.env/
+.python-version
+
+# Python cache and build artifacts
 __pycache__/
+*.py[cod]
+*$py.class
+.eggs/
+*.egg-info/
+build/
+dist/
+site/
+pip-wheel-metadata/
+.wheelhouse/
+
+# Jupyter
 .ipynb_checkpoints/
+
+# Tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+
+# Editors and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+__MACOSX/
+
+# Local temp outputs
+tmp/
+temp/
+*.tmp
+
+# Assignment 2 generated previews and packaged snapshots
+Assignment2/A2_code/tmp/
+Assignment2/A2_code/A2_code_submission_*/
+Assignment2/A2_code/A2_code_submission_minimal_*/
+
+# Assignment 3 datasets, training artifacts, and packaging outputs
+Assignment3/__pycache__/
+Assignment3/work/
+Assignment3/wiki_zh_2019.zip
+Assignment3/Assignment3/artifacts/
+Assignment3/submission_ready/artifacts/
+Assignment3/Assignment3.zip
+Assignment3/Assignment3_submission.zip
+Assignment3/Assignment3_submission_no_retrain.zip
+Assignment3/submission_ready.zip
+
+# Assignment 3 LaTeX auxiliary files
+Assignment3/report/*.aux
+Assignment3/report/*.log
+Assignment3/report/*.out
